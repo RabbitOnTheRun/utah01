@@ -1,0 +1,11 @@
+activeElement {
+	port {z , w, x, y}
+	state { a, b, c { g, h, i} }
+	transition { 
+		a -> b : x ;
+		b -> g : v [L] / jjj("yama") emits {
+			success : z -> work(  ) ; 
+			fail : w -> joy(  ) ;
+		};
+	}
+} myone ;
