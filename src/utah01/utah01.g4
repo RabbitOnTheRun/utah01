@@ -39,9 +39,9 @@ stateDefinitions returns [String val] :
 
 stateDefinition returns [String val]: 
     ID 
-        {$val = "\"" + $ID.text + "\"" ;} 
+        {$val = "[ \"" + $ID.text + "\" , [] ]" ;} 
     | ID '{' stateDefinitions '}'   
-        {$val = "\"" + $ID.text + "\"" + " {" + $stateDefinitions.val + "}"  ;} 
+        {$val = "[ \"" + $ID.text + "\"" + ", [" + $stateDefinitions.val + "] ]"  ;} 
 ;
 
 stateDefinitionsD returns [String val]: 

@@ -6,3 +6,5 @@
 /src/utah01/utah01Lexer.tokens
 /src/utah01/utah01Listener.java
 /src/utah01/utah01Parser.java
+/build/*
+/dist/*
