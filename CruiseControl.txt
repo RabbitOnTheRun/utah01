@@ -1,0 +1,163 @@
+activeElement {
+	inPort{CRUISECONTROLLER}
+	outPort {SPEC, SENSORSCAN, SPEEDCONTROL, INPUTSPEED }
+	state { start, INACTIVE, ACTIVE, STANDBY, CRUISING}
+
+	transition {
+		start -> INACTIVE : start;
+		INACTIVE -> INACTIVE : brake;
+		INACTIVE -> INACTIVE : off;
+		INACTIVE -> INACTIVE : accelerator;
+		INACTIVE -> ACTIVE : 
+			engineOn /  emits {
+                SPEC -> engineOn();
+				SPEC -> clearSpeed();
+				SENSORSCAN -> engineOn_();
+				SENSORSCAN -> clearSpeed();
+				SPEEDCONTROL -> clearSpeed();
+				INPUTSPEED -> engineOn();
+		};
+		
+		ACTIVE -> CRUISING :
+			on /  emits {
+				SPEEDCONTROL -> recordSpeed();
+				SPEEDCONTROL -> enableControl();
+		};
+		
+		ACTIVE -> INACTIVE : engineOff;
+		
+		CRUISING -> STANDBY :
+			off / emits {
+				SPEEDCONTROL -> disableControl();
+			};
+		CRUISING -> STANDBY :
+			brake / emits {
+				SPEEDCONTROL -> disableControl();
+			};
+		CRUISING -> STANDBY :
+			accelerator / emits {
+				SPEEDCONTROL -> disableControl(); 
+			};
+		CRUISING -> CRUISING :
+			on / emits {
+				SPEEDCONTROL -> recordSpeed();
+				SPEEDCONTROL -> enableControl();
+			};
+		STANDBY -> STANDBY :
+			off;
+		STANDBY -> STANDBY :
+			brake;
+		STANDBY -> STANDBY :
+			accelerator;
+		STANDBY -> CRUISING :
+			resume / emits {
+				SPEEDCONTROL -> enableControl();
+			};
+		STANDBY -> CRUISING :
+			on / emits {
+				SPEEDCONTROL -> recordSpeed();
+				SPEEDCONTROL -> enableControl();
+			};
+		STANDBY -> INACTIVE :
+			engineOff;
+	}
+} CRUISECONTROLLER;
+
+
+activeElement {
+	inPort{SPEC}
+	outPort { OUT }
+	state { start, SPEC, State1, State2 }
+
+	transition {
+		start -> SPEC : start;
+		SPEC	-> State1 : engineOn;
+		State1	-> State2 : clearSpeed;
+		State2	-> SPEC : engineOff;
+	}
+} SPEC;
+
+
+activeElement {
+	inPort{ SPEEDCONTROL}
+	outPort { INPUTSPEED }
+	state { start, DISABLED, ENABLED }
+
+	transition {
+		start -> DISABLED : start;
+		DISABLED -> DISABLED : clearSpeed;
+		DISABLED -> DISABLED : speed;
+		DISABLED -> DISABLED : recordSpeed;
+		DISABLED -> DISABLED : returnSpeed;
+
+		ENABLED -> ENABLED  : enableControl;
+		ENABLED -> ENABLED  : recordSpeed;
+		ENABLED -> DISABLED  : disableControl;
+		
+		DISABLED -> ENABLED  : 
+			enableControl / emits {
+				INPUTSPEED -> getSpeed();
+			};
+		ENABLED -> ENABLED  : 
+			returnSpeed / setThrottle() ;
+	}
+} SPEEDCONTROL;
+
+activeElement {
+	inPort{ INPUTSPEED }
+	outPort { SPEEDCONTROL }
+	state { start, INPUTSPEED, CHECKSPEED }
+
+	transition {
+		start -> INPUTSPEED : start;
+		INPUTSPEED -> CHECKSPEED : engineOn;
+		CHECKSPEED -> INPUTSPEED : engineOff;
+		CHECKSPEED -> CHECKSPEED : 
+			getSpeed / getSpeedFunction() emits {
+				success : SPEEDCONTROL -> returnSpeed();
+			};
+	}
+} INPUTSPEED;
+
+
+activeElement {
+	inPort{ SENSORSCAN }
+	outPort { SPEC, INPUTSPEED, CRUISECONTROLLER }
+	state { start, SENSORSCAN, State15 }
+
+	transition {
+		start -> SENSORSCAN : start;
+		SENSORSCAN -> SENSORSCAN : 
+			engineOff_ / emits { 
+				SPEC -> engineOff();
+				INPUTSPEED -> engineOff();
+				CRUISECONTROLLER -> engineOff();
+			};
+		
+		SENSORSCAN -> SENSORSCAN : 
+			on_ / emits { 
+				CRUISECONTROLLER -> on();
+			};
+		SENSORSCAN -> SENSORSCAN : 
+			off_ / emits { 
+				CRUISECONTROLLER -> off();
+			};
+		SENSORSCAN -> SENSORSCAN : 
+			resume_  / emits { 
+				CRUISECONTROLLER -> resume();
+			};
+		SENSORSCAN -> SENSORSCAN : 
+			brake_ / emits { 
+				CRUISECONTROLLER -> brake();
+			};
+		SENSORSCAN -> SENSORSCAN : 
+			accelerator_ / emits { 
+				CRUISECONTROLLER -> accelerator();
+			};
+		SENSORSCAN -> State15 : engineOn_;
+		State15 -> SENSORSCAN : clearSpeed;
+	}
+} SENSORSCAN;
+
+
+

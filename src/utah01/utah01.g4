@@ -6,7 +6,7 @@
 
 grammar utah01;
 
-ID : [a-zA-Z][a-zA-Z0-9]* ;
+ID : [a-zA-Z_][a-zA-Z0-9_]* ;
 WS : [ \r\t\n]+ -> skip ;
 
 start : elements ;
@@ -88,7 +88,8 @@ argType : ID ;
 
 guard returns [String val]:
 		// empty
-       {$val = "\"guard\" : \"NULL\"" ;}
+       //{$val = "\"guard\" : \"NULL\"" ;}
+       {$val = "\"guard\" : {\"name\" : \"NULL\", \"arg\" : \"NULL\" }" ;}
     | '[' guardName ']'
        {$val = "\"guard\" : {\"name\" : \"" + $guardName.text + "\", \"arg\" : \"NULL\" }" ;}
     | '[' guardName '(' ')' ']'
@@ -103,6 +104,8 @@ givenArgument : stringLiteral ;
 messageProcessing returns [String val]:
         //{$val = "NULL"; }
         {$val = "\n\t\"methodInvocation\" : {\"methodName\" : \"NULL\" , \"methodArgument\" : \"NULL\" }, \n\t\"resultHandling\" : []"; }
+    | '/' resultHandling
+        {$val = "\n\t\"methodInvocation\" : {\"methodName\" : \"NULL\" , \"methodArgument\" : \"NULL\" }, \n\t" + $resultHandling.val; }
     | '/' methodInvocation resultHandling
         {$val = "\n\t" + $methodInvocation.val + " ,\n\t" + $resultHandling.val; }
 ;
