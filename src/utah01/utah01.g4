@@ -73,13 +73,13 @@ to : ID ;
 
 messageReception returns [String val] :
     messageName 
-        { $val = "\"message\" : {\"name\" : \""  + $messageName.text +   "\" ,\"type\" : NULL }" ;}
+        { $val = "\"message\" : {\"name\" : \""  + $messageName.text +   "\" ,\"type\" : \"NULL\" }" ;}
     | messageName '(' typeOfArgument ')'
         { $val = "\"message\" : {\"name\" : \"" + $messageName.text + "\" ," + $typeOfArgument.val  +  "}" ;}
 ;
 
 typeOfArgument returns [String val]:
-        {$val = "\"type\" : NULL " ; }
+        {$val = "\"type\" : \"NULL\" " ; }
     | 'type' argType 
         {$val = "\"type\" : \"" + $argType.text + "\""; }
 ;
@@ -88,11 +88,11 @@ argType : ID ;
 
 guard returns [String val]:
 		// empty
-       {$val = "\"guard\" : NULL" ;}
+       {$val = "\"guard\" : \"NULL\"" ;}
     | '[' guardName ']'
-       {$val = "\"guard\" : {\"name\" : \"" + $guardName.text + "\", \"arg\" : NULL }" ;}
+       {$val = "\"guard\" : {\"name\" : \"" + $guardName.text + "\", \"arg\" : \"NULL\" }" ;}
     | '[' guardName '(' ')' ']'
-       {$val = "\"guard\" : {\"name\" : \"" + $guardName.text + "\", \"arg\" : NULL }" ;}
+       {$val = "\"guard\" : {\"name\" : \"" + $guardName.text + "\", \"arg\" : \"NULL\" }" ;}
     | '[' guardName '(' givenArgument ')' ']'
        {$val = "\"guard\" : {\"name\" : \"" + $guardName.text + "\", \"arg\" : \"" + $givenArgument.text  +  "\" }" ;}
 ;
@@ -102,7 +102,7 @@ givenArgument : stringLiteral ;
 
 messageProcessing returns [String val]:
         //{$val = "NULL"; }
-        {$val = "\n\t\"methodInvocation\" : NULL, \"resultHandling\" : NULL"; }
+        {$val = "\n\t\"methodInvocation\" : {\"methodName\" : \"NULL\" , \"methodArgument\" : \"NULL\" }, \n\t\"resultHandling\" : []"; }
     | '/' methodInvocation resultHandling
         {$val = "\n\t" + $methodInvocation.val + " ,\n\t" + $resultHandling.val; }
 ;
@@ -168,8 +168,16 @@ messageEmissionParams returns [String val]:
 ;                          
 
 portPart returns [String val]:
-    'port' '{' listOfPort '}'
-    { $val = "\"port\" : \n [" + $listOfPort.val + "] ";}
+    'inPort' '{' listOfPortIn '}' 'outPort' '{' listOfPortOut '}'
+    { $val = "\"inPort\" : \n [" + $listOfPortIn.val + "] , \n" + "\"outPort\" : \n [" + $listOfPortOut.val + "] " ;}
+;
+
+listOfPortIn returns [String val]:
+    listOfPort  { $val = $listOfPort.val; }
+;
+
+listOfPortOut returns [String val]:
+    listOfPort  { $val = $listOfPort.val; }
 ;
 
 listOfPort returns [String val]:

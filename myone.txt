@@ -1,19 +1,22 @@
-{"port" : 
+{"inPort" : 
+ ["z" , "w" , "x" , "y"] , 
+"outPort" : 
  ["z" , "w" , "x" , "y"] , 
 
 "state" : 
- [[ "a" , [] ] , [ "b" , [] ] , [ "c", [[ "g" , [] ] , [ "h" , [] ] , [ "i" , [] ]] ]] , 
+ [[ "start" , [] ] , [ "b" , [] ] , [ "c", [[ "g" , [] ] , [ "h" , [] ] , [ "i" , [] ]] ]] , 
 
 "transition" : [ 
-{ "from" : "a" ,"to" : "b" ,
-	"message" : {"name" : "x" ,"type" : NULL } , 
-	"guard" : NULL , 
-	"methodInvocation" : NULL, "resultHandling" : NULL 
+{ "from" : "start" ,"to" : "b" ,
+	"message" : {"name" : "x" ,"type" : "NULL" } , 
+	"guard" : "NULL" , 
+	"methodInvocation" : {"methodName" : "NULL" , "methodArgument" : "NULL" }, 
+	"resultHandling" : [] 
  } , 
 
 { "from" : "b" ,"to" : "g" ,
-	"message" : {"name" : "v" ,"type" : NULL } , 
-	"guard" : {"name" : "L", "arg" : NULL } , 
+	"message" : {"name" : "v" ,"type" : "NULL" } , 
+	"guard" : {"name" : "L", "arg" : "NULL" } , 
 	"methodInvocation" : {"methodName" : "jjj" , "methodArgument" : "yama" } ,
 	"resultHandling" : [ 
 		{"resultCode" : "success", "messageEmission" : 
