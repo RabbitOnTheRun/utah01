@@ -1,0 +1,111 @@
+{"inPort" : 
+ ["SENSORSCAN"] , 
+"outPort" : 
+ ["SPEC" , "INPUTSPEED" , "CRUISECONTROLLER"] , 
+
+"state" : 
+ [[ "start" , [] ] , [ "SENSORSCAN" , [] ] , [ "State15" , [] ]] , 
+
+"transition" : [ 
+{ "from" : "start" ,"to" : "SENSORSCAN" ,
+	"message" : {"name" : "start" ,"type" : "NULL" } , 
+	"guard" : {"name" : "NULL", "arg" : "NULL" } , 
+	"methodInvocation" : {"methodName" : "NULL" , "methodArgument" : "NULL" }, 
+	"resultHandling" : [] 
+ } , 
+
+{ "from" : "SENSORSCAN" ,"to" : "SENSORSCAN" ,
+	"message" : {"name" : "engineOff_" ,"type" : "NULL" } , 
+	"guard" : {"name" : "NULL", "arg" : "NULL" } , 
+	"methodInvocation" : {"methodName" : "NULL" , "methodArgument" : "NULL" }, 
+	"resultHandling" : [ 
+		{"resultCode" : "NULL", "messageEmission" : 
+			{"port" : "SPEC" ,"messageName" : "engineOff" ,"argType" : "NULL" ,"givenArgument" : "NULL" }
+		} ,
+		{"resultCode" : "NULL", "messageEmission" : 
+			{"port" : "INPUTSPEED" ,"messageName" : "engineOff" ,"argType" : "NULL" ,"givenArgument" : "NULL" }
+		} ,
+		{"resultCode" : "NULL", "messageEmission" : 
+			{"port" : "CRUISECONTROLLER" ,"messageName" : "engineOff" ,"argType" : "NULL" ,"givenArgument" : "NULL" }
+		}
+	 ] 
+ } , 
+
+{ "from" : "SENSORSCAN" ,"to" : "SENSORSCAN" ,
+	"message" : {"name" : "on_" ,"type" : "NULL" } , 
+	"guard" : {"name" : "NULL", "arg" : "NULL" } , 
+	"methodInvocation" : {"methodName" : "NULL" , "methodArgument" : "NULL" }, 
+	"resultHandling" : [ 
+		{"resultCode" : "NULL", "messageEmission" : 
+			{"port" : "CRUISECONTROLLER" ,"messageName" : "on" ,"argType" : "NULL" ,"givenArgument" : "NULL" }
+		}
+	 ] 
+ } , 
+
+{ "from" : "SENSORSCAN" ,"to" : "SENSORSCAN" ,
+	"message" : {"name" : "off_" ,"type" : "NULL" } , 
+	"guard" : {"name" : "NULL", "arg" : "NULL" } , 
+	"methodInvocation" : {"methodName" : "NULL" , "methodArgument" : "NULL" }, 
+	"resultHandling" : [ 
+		{"resultCode" : "NULL", "messageEmission" : 
+			{"port" : "CRUISECONTROLLER" ,"messageName" : "off" ,"argType" : "NULL" ,"givenArgument" : "NULL" }
+		}
+	 ] 
+ } , 
+
+{ "from" : "SENSORSCAN" ,"to" : "SENSORSCAN" ,
+	"message" : {"name" : "resume_" ,"type" : "NULL" } , 
+	"guard" : {"name" : "NULL", "arg" : "NULL" } , 
+	"methodInvocation" : {"methodName" : "NULL" , "methodArgument" : "NULL" }, 
+	"resultHandling" : [ 
+		{"resultCode" : "NULL", "messageEmission" : 
+			{"port" : "CRUISECONTROLLER" ,"messageName" : "resume" ,"argType" : "NULL" ,"givenArgument" : "NULL" }
+		}
+	 ] 
+ } , 
+
+{ "from" : "SENSORSCAN" ,"to" : "SENSORSCAN" ,
+	"message" : {"name" : "brake_" ,"type" : "NULL" } , 
+	"guard" : {"name" : "NULL", "arg" : "NULL" } , 
+	"methodInvocation" : {"methodName" : "NULL" , "methodArgument" : "NULL" }, 
+	"resultHandling" : [ 
+		{"resultCode" : "NULL", "messageEmission" : 
+			{"port" : "CRUISECONTROLLER" ,"messageName" : "brake" ,"argType" : "NULL" ,"givenArgument" : "NULL" }
+		}
+	 ] 
+ } , 
+
+{ "from" : "SENSORSCAN" ,"to" : "SENSORSCAN" ,
+	"message" : {"name" : "accelerator_" ,"type" : "NULL" } , 
+	"guard" : {"name" : "NULL", "arg" : "NULL" } , 
+	"methodInvocation" : {"methodName" : "NULL" , "methodArgument" : "NULL" }, 
+	"resultHandling" : [ 
+		{"resultCode" : "NULL", "messageEmission" : 
+			{"port" : "CRUISECONTROLLER" ,"messageName" : "accelerator" ,"argType" : "NULL" ,"givenArgument" : "NULL" }
+		}
+	 ] 
+ } , 
+
+{ "from" : "SENSORSCAN" ,"to" : "State15" ,
+	"message" : {"name" : "engineOn_" ,"type" : "NULL" } , 
+	"guard" : {"name" : "NULL", "arg" : "NULL" } , 
+	"methodInvocation" : {"methodName" : "NULL" , "methodArgument" : "NULL" }, 
+	"resultHandling" : [] 
+ } , 
+
+{ "from" : "State15" ,"to" : "SENSORSCAN" ,
+	"message" : {"name" : "clearSpeed" ,"type" : "NULL" } , 
+	"guard" : {"name" : "NULL", "arg" : "NULL" } , 
+	"methodInvocation" : {"methodName" : "NULL" , "methodArgument" : "NULL" }, 
+	"resultHandling" : [] 
+ } 
+] , 
+
+
+"acceptableMessage" : ["engineOff_" , "on_" , "engineOn_" , "off_" , "accelerator_" , "start" , "resume_" , "brake_" , "clearSpeed" ] 
+
+"emitMessage" : [{"port" : "SPEC" , "messageName" : "engineOff" } , {"port" : "INPUTSPEED" , "messageName" : "engineOff" } , {"port" : "CRUISECONTROLLER" , "messageName" : "engineOff" } , {"port" : "CRUISECONTROLLER" , "messageName" : "on" } , {"port" : "CRUISECONTROLLER" , "messageName" : "off" } , {"port" : "CRUISECONTROLLER" , "messageName" : "resume" } , {"port" : "CRUISECONTROLLER" , "messageName" : "brake" } , {"port" : "CRUISECONTROLLER" , "messageName" : "accelerator" } ] 
+, 
+
+"name" : "SENSORSCAN" 
+}

@@ -22,13 +22,15 @@ activeElement returns [String val] :
         SymbolTable.state.clear();
         SymbolTable.outPort.clear();
         SymbolTable.acceptableMessage.clear();
+        SymbolTable.emitMessage.clear();
     }
 ; 
 
 activeElementBody returns [String val] : 
     '{' portPart statePart transitionPart '}' 
         { $val = $portPart.val + ", \n\n" + $statePart.val + ", \n\n" 
-            +  $transitionPart.val + ", \n\n" + SymbolTable.makeMessageList(); 
+            +  $transitionPart.val + ", \n\n" + SymbolTable.makeAcceptableMessageList()
+            + SymbolTable.makeEmitMessageList(); 
             SymbolTable.count++; }    
 ;
 
@@ -186,6 +188,7 @@ messageEmission returns [String val]:
         if (false == SymbolTable.outPort.contains($portOut.val)) {
             System.out.println("port not defined : " +  $portOut.val );
         }
+        SymbolTable.emitMessage.add( new EmitMessage($portOut.val, $messageName.text) );
         }
 ;
 

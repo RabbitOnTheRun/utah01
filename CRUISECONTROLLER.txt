@@ -1,0 +1,193 @@
+{"inPort" : 
+ ["CRUISECONTROLLER"] , 
+"outPort" : 
+ ["SPEC" , "SENSORSCAN" , "SPEEDCONTROL" , "INPUTSPEED"] , 
+
+"state" : 
+ [[ "start" , [] ] , [ "INACTIVE" , [] ] , [ "ACTIVE" , [] ] , [ "STANDBY" , [] ] , [ "CRUISING" , [] ]] , 
+
+"transition" : [ 
+{ "from" : "start" ,"to" : "INACTIVE" ,
+	"message" : {"name" : "start" ,"type" : "NULL" } , 
+	"guard" : {"name" : "NULL", "arg" : "NULL" } , 
+	"methodInvocation" : {"methodName" : "NULL" , "methodArgument" : "NULL" }, 
+	"resultHandling" : [] 
+ } , 
+
+{ "from" : "INACTIVE" ,"to" : "INACTIVE" ,
+	"message" : {"name" : "brake" ,"type" : "NULL" } , 
+	"guard" : {"name" : "NULL", "arg" : "NULL" } , 
+	"methodInvocation" : {"methodName" : "NULL" , "methodArgument" : "NULL" }, 
+	"resultHandling" : [] 
+ } , 
+
+{ "from" : "INACTIVE" ,"to" : "INACTIVE" ,
+	"message" : {"name" : "off" ,"type" : "NULL" } , 
+	"guard" : {"name" : "NULL", "arg" : "NULL" } , 
+	"methodInvocation" : {"methodName" : "NULL" , "methodArgument" : "NULL" }, 
+	"resultHandling" : [] 
+ } , 
+
+{ "from" : "INACTIVE" ,"to" : "INACTIVE" ,
+	"message" : {"name" : "accelerator" ,"type" : "NULL" } , 
+	"guard" : {"name" : "NULL", "arg" : "NULL" } , 
+	"methodInvocation" : {"methodName" : "NULL" , "methodArgument" : "NULL" }, 
+	"resultHandling" : [] 
+ } , 
+
+{ "from" : "INACTIVE" ,"to" : "ACTIVE" ,
+	"message" : {"name" : "engineOn" ,"type" : "NULL" } , 
+	"guard" : {"name" : "NULL", "arg" : "NULL" } , 
+	"methodInvocation" : {"methodName" : "NULL" , "methodArgument" : "NULL" }, 
+	"resultHandling" : [ 
+		{"resultCode" : "NULL", "messageEmission" : 
+			{"port" : "SPEC" ,"messageName" : "engineOn" ,"argType" : "NULL" ,"givenArgument" : "NULL" }
+		} ,
+		{"resultCode" : "NULL", "messageEmission" : 
+			{"port" : "SPEC" ,"messageName" : "clearSpeed" ,"argType" : "NULL" ,"givenArgument" : "NULL" }
+		} ,
+		{"resultCode" : "NULL", "messageEmission" : 
+			{"port" : "SENSORSCAN" ,"messageName" : "engineOn_" ,"argType" : "NULL" ,"givenArgument" : "NULL" }
+		} ,
+		{"resultCode" : "NULL", "messageEmission" : 
+			{"port" : "SENSORSCAN" ,"messageName" : "clearSpeed" ,"argType" : "NULL" ,"givenArgument" : "NULL" }
+		} ,
+		{"resultCode" : "NULL", "messageEmission" : 
+			{"port" : "SPEEDCONTROL" ,"messageName" : "clearSpeed" ,"argType" : "NULL" ,"givenArgument" : "NULL" }
+		} ,
+		{"resultCode" : "NULL", "messageEmission" : 
+			{"port" : "INPUTSPEED" ,"messageName" : "engineOn" ,"argType" : "NULL" ,"givenArgument" : "NULL" }
+		}
+	 ] 
+ } , 
+
+{ "from" : "ACTIVE" ,"to" : "CRUISING" ,
+	"message" : {"name" : "on" ,"type" : "NULL" } , 
+	"guard" : {"name" : "NULL", "arg" : "NULL" } , 
+	"methodInvocation" : {"methodName" : "NULL" , "methodArgument" : "NULL" }, 
+	"resultHandling" : [ 
+		{"resultCode" : "NULL", "messageEmission" : 
+			{"port" : "SPEEDCONTROL" ,"messageName" : "recordSpeed" ,"argType" : "NULL" ,"givenArgument" : "NULL" }
+		} ,
+		{"resultCode" : "NULL", "messageEmission" : 
+			{"port" : "SPEEDCONTROL" ,"messageName" : "enableControl" ,"argType" : "NULL" ,"givenArgument" : "NULL" }
+		}
+	 ] 
+ } , 
+
+{ "from" : "ACTIVE" ,"to" : "INACTIVE" ,
+	"message" : {"name" : "engineOff" ,"type" : "NULL" } , 
+	"guard" : {"name" : "NULL", "arg" : "NULL" } , 
+	"methodInvocation" : {"methodName" : "NULL" , "methodArgument" : "NULL" }, 
+	"resultHandling" : [] 
+ } , 
+
+{ "from" : "CRUISING" ,"to" : "STANDBY" ,
+	"message" : {"name" : "off" ,"type" : "NULL" } , 
+	"guard" : {"name" : "NULL", "arg" : "NULL" } , 
+	"methodInvocation" : {"methodName" : "NULL" , "methodArgument" : "NULL" }, 
+	"resultHandling" : [ 
+		{"resultCode" : "NULL", "messageEmission" : 
+			{"port" : "SPEEDCONTROL" ,"messageName" : "disableControl" ,"argType" : "NULL" ,"givenArgument" : "NULL" }
+		}
+	 ] 
+ } , 
+
+{ "from" : "CRUISING" ,"to" : "STANDBY" ,
+	"message" : {"name" : "brake" ,"type" : "NULL" } , 
+	"guard" : {"name" : "NULL", "arg" : "NULL" } , 
+	"methodInvocation" : {"methodName" : "NULL" , "methodArgument" : "NULL" }, 
+	"resultHandling" : [ 
+		{"resultCode" : "NULL", "messageEmission" : 
+			{"port" : "SPEEDCONTROL" ,"messageName" : "disableControl" ,"argType" : "NULL" ,"givenArgument" : "NULL" }
+		}
+	 ] 
+ } , 
+
+{ "from" : "CRUISING" ,"to" : "STANDBY" ,
+	"message" : {"name" : "accelerator" ,"type" : "NULL" } , 
+	"guard" : {"name" : "NULL", "arg" : "NULL" } , 
+	"methodInvocation" : {"methodName" : "NULL" , "methodArgument" : "NULL" }, 
+	"resultHandling" : [ 
+		{"resultCode" : "NULL", "messageEmission" : 
+			{"port" : "SPEEDCONTROL" ,"messageName" : "disableControl" ,"argType" : "NULL" ,"givenArgument" : "NULL" }
+		}
+	 ] 
+ } , 
+
+{ "from" : "CRUISING" ,"to" : "CRUISING" ,
+	"message" : {"name" : "on" ,"type" : "NULL" } , 
+	"guard" : {"name" : "NULL", "arg" : "NULL" } , 
+	"methodInvocation" : {"methodName" : "NULL" , "methodArgument" : "NULL" }, 
+	"resultHandling" : [ 
+		{"resultCode" : "NULL", "messageEmission" : 
+			{"port" : "SPEEDCONTROL" ,"messageName" : "recordSpeed" ,"argType" : "NULL" ,"givenArgument" : "NULL" }
+		} ,
+		{"resultCode" : "NULL", "messageEmission" : 
+			{"port" : "SPEEDCONTROL" ,"messageName" : "enableControl" ,"argType" : "NULL" ,"givenArgument" : "NULL" }
+		}
+	 ] 
+ } , 
+
+{ "from" : "STANDBY" ,"to" : "STANDBY" ,
+	"message" : {"name" : "off" ,"type" : "NULL" } , 
+	"guard" : {"name" : "NULL", "arg" : "NULL" } , 
+	"methodInvocation" : {"methodName" : "NULL" , "methodArgument" : "NULL" }, 
+	"resultHandling" : [] 
+ } , 
+
+{ "from" : "STANDBY" ,"to" : "STANDBY" ,
+	"message" : {"name" : "brake" ,"type" : "NULL" } , 
+	"guard" : {"name" : "NULL", "arg" : "NULL" } , 
+	"methodInvocation" : {"methodName" : "NULL" , "methodArgument" : "NULL" }, 
+	"resultHandling" : [] 
+ } , 
+
+{ "from" : "STANDBY" ,"to" : "STANDBY" ,
+	"message" : {"name" : "accelerator" ,"type" : "NULL" } , 
+	"guard" : {"name" : "NULL", "arg" : "NULL" } , 
+	"methodInvocation" : {"methodName" : "NULL" , "methodArgument" : "NULL" }, 
+	"resultHandling" : [] 
+ } , 
+
+{ "from" : "STANDBY" ,"to" : "CRUISING" ,
+	"message" : {"name" : "resume" ,"type" : "NULL" } , 
+	"guard" : {"name" : "NULL", "arg" : "NULL" } , 
+	"methodInvocation" : {"methodName" : "NULL" , "methodArgument" : "NULL" }, 
+	"resultHandling" : [ 
+		{"resultCode" : "NULL", "messageEmission" : 
+			{"port" : "SPEEDCONTROL" ,"messageName" : "enableControl" ,"argType" : "NULL" ,"givenArgument" : "NULL" }
+		}
+	 ] 
+ } , 
+
+{ "from" : "STANDBY" ,"to" : "CRUISING" ,
+	"message" : {"name" : "on" ,"type" : "NULL" } , 
+	"guard" : {"name" : "NULL", "arg" : "NULL" } , 
+	"methodInvocation" : {"methodName" : "NULL" , "methodArgument" : "NULL" }, 
+	"resultHandling" : [ 
+		{"resultCode" : "NULL", "messageEmission" : 
+			{"port" : "SPEEDCONTROL" ,"messageName" : "recordSpeed" ,"argType" : "NULL" ,"givenArgument" : "NULL" }
+		} ,
+		{"resultCode" : "NULL", "messageEmission" : 
+			{"port" : "SPEEDCONTROL" ,"messageName" : "enableControl" ,"argType" : "NULL" ,"givenArgument" : "NULL" }
+		}
+	 ] 
+ } , 
+
+{ "from" : "STANDBY" ,"to" : "INACTIVE" ,
+	"message" : {"name" : "engineOff" ,"type" : "NULL" } , 
+	"guard" : {"name" : "NULL", "arg" : "NULL" } , 
+	"methodInvocation" : {"methodName" : "NULL" , "methodArgument" : "NULL" }, 
+	"resultHandling" : [] 
+ } 
+] , 
+
+
+"acceptableMessage" : ["resume" , "brake" , "accelerator" , "engineOff" , "engineOn" , "start" , "off" , "on" ] 
+
+"emitMessage" : [{"port" : "SPEC" , "messageName" : "engineOn" } , {"port" : "SPEC" , "messageName" : "clearSpeed" } , {"port" : "SENSORSCAN" , "messageName" : "engineOn_" } , {"port" : "SENSORSCAN" , "messageName" : "clearSpeed" } , {"port" : "SPEEDCONTROL" , "messageName" : "clearSpeed" } , {"port" : "INPUTSPEED" , "messageName" : "engineOn" } , {"port" : "SPEEDCONTROL" , "messageName" : "recordSpeed" } , {"port" : "SPEEDCONTROL" , "messageName" : "enableControl" } , {"port" : "SPEEDCONTROL" , "messageName" : "disableControl" } , {"port" : "SPEEDCONTROL" , "messageName" : "disableControl" } , {"port" : "SPEEDCONTROL" , "messageName" : "disableControl" } , {"port" : "SPEEDCONTROL" , "messageName" : "recordSpeed" } , {"port" : "SPEEDCONTROL" , "messageName" : "enableControl" } , {"port" : "SPEEDCONTROL" , "messageName" : "enableControl" } , {"port" : "SPEEDCONTROL" , "messageName" : "recordSpeed" } , {"port" : "SPEEDCONTROL" , "messageName" : "enableControl" } ] 
+, 
+
+"name" : "CRUISECONTROLLER" 
+}

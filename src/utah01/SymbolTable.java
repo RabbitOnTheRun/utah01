@@ -20,8 +20,9 @@ public class SymbolTable {
     static ArrayList<String> inPort = new ArrayList<>();
     static ArrayList<String> outPort = new ArrayList<>();
     static Set<String> acceptableMessage = new HashSet<>();
+    static ArrayList<EmitMessage> emitMessage = new ArrayList<>();
 
-    static String makeMessageList() {
+    static String makeAcceptableMessageList() {
         String string = "\n\"acceptableMessage\" : [";
 
         boolean ifFirst = true;
@@ -32,6 +33,23 @@ public class SymbolTable {
             } else {
                 string += " , " + "\"" + str + "\"";
             }
+        }
+        string += " ] \n";
+        return string;
+    }
+
+    static String makeEmitMessageList() {
+        String string = "\n\"emitMessage\" : [";
+
+        boolean ifFirst = true;
+        for (EmitMessage emitMessage : SymbolTable.emitMessage) {
+            if (ifFirst) {
+                ifFirst = false;
+            } else {
+                string += " , ";
+            }
+            string += "{\"port\" : \"" + emitMessage.port + "\" , ";
+            string += "\"messageName\" : \"" + emitMessage.messageName + "\" }";
         }
         string += " ] \n";
         return string;
