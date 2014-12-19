@@ -18,11 +18,17 @@ elements :
 
 activeElement returns [String val] : 
     'activeElement' activeElementBody ID ';' 
+    {
+        SymbolTable.state.clear();
+        SymbolTable.outPort.clear();
+        SymbolTable.acceptableMessage.clear();
+    }
 ; 
 
 activeElementBody returns [String val] : 
     '{' portPart statePart transitionPart '}' 
-        { $val = $portPart.val + ", \n\n" + $statePart.val + ", \n\n" +  $transitionPart.val; 
+        { $val = $portPart.val + ", \n\n" + $statePart.val + ", \n\n" 
+            +  $transitionPart.val + ", \n\n" + SymbolTable.makeMessageList(); 
             SymbolTable.count++; }    
 ;
 
@@ -77,6 +83,7 @@ from returns [String val] :
     ID 
         {   if (false == SymbolTable.state.contains($ID.text)) {
                 System.out.println("State definition from not found : " + $ID.text);
+                System.out.println("LINE : " + _localctx.start.getLine());
             }
             $val = $ID.text;
         }
@@ -91,10 +98,10 @@ to returns [String val] :
 ;
 
 messageReception returns [String val] :
-    messageName 
-        { $val = "\"message\" : {\"name\" : \""  + $messageName.text +   "\" ,\"type\" : \"NULL\" }" ;}
-    | messageName '(' typeOfArgument ')'
-        { $val = "\"message\" : {\"name\" : \"" + $messageName.text + "\" ," + $typeOfArgument.val  +  "}" ;}
+    messageNameR 
+        { $val = "\"message\" : {\"name\" : \""  + $messageNameR.val +   "\" ,\"type\" : \"NULL\" }" ;}
+    | messageNameR '(' typeOfArgument ')'
+        { $val = "\"message\" : {\"name\" : \"" + $messageNameR.val + "\" ," + $typeOfArgument.val  +  "}" ;}
 ;
 
 typeOfArgument returns [String val]:
@@ -225,8 +232,12 @@ portOut returns [String val]:
     ID { $val = $ID.text; }  
 ;
 
-
 messageName : ID ;
+
+messageNameR returns [String val]:
+    ID { SymbolTable.acceptableMessage.add($ID.text); 
+        $val = $ID.text; }
+;
 
 stringLiteral : STRING+ ;
 STRING : '"' ( '\\"' | . )*? '"' ; // match "foo", "\"", "x\"\"y", ...

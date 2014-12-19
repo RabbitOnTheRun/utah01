@@ -40,7 +40,7 @@ public class Utah01 {
         } catch (Exception e) {
             System.out.println(e);
         }
-        System.out.print("number of elements = ");
-        System.out.println(SymbolTable.count);
+        //System.out.print("number of elements = ");
+        //System.out.println(SymbolTable.count);
     }
 }

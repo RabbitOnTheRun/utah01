@@ -10,6 +10,8 @@
  * @author ntanaka
  */
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashSet;
 
 public class SymbolTable {
 
@@ -17,4 +19,21 @@ public class SymbolTable {
     static ArrayList<String> state = new ArrayList<>();
     static ArrayList<String> inPort = new ArrayList<>();
     static ArrayList<String> outPort = new ArrayList<>();
+    static Set<String> acceptableMessage = new HashSet<>();
+
+    static String makeMessageList() {
+        String string = "\n\"acceptableMessage\" : [";
+
+        boolean ifFirst = true;
+        for (String str : SymbolTable.acceptableMessage) {
+            if (ifFirst) {
+                string += "\"" + str + "\"";
+                ifFirst = false;
+            } else {
+                string += " , " + "\"" + str + "\"";
+            }
+        }
+        string += " ] \n";
+        return string;
+    }
 }
