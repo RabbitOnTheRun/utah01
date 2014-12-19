@@ -1,0 +1,43 @@
+{"inPort" : 
+ ["INPUTSPEED"] , 
+"outPort" : 
+ ["SPEEDCONTROL"] , 
+
+"state" : 
+ [[ "start" , [] ] , [ "INPUTSPEED" , [] ] , [ "CHECKSPEED" , [] ]] , 
+
+"transition" : [ 
+{ "from" : "start" ,"to" : "INPUTSPEED" ,
+	"message" : {"name" : "start" ,"type" : "NULL" } , 
+	"guard" : {"name" : "NULL", "arg" : "NULL" } , 
+	"methodInvocation" : {"methodName" : "NULL" , "methodArgument" : "NULL" }, 
+	"resultHandling" : [] 
+ } , 
+
+{ "from" : "INPUTSPEED" ,"to" : "CHECKSPEED" ,
+	"message" : {"name" : "engineOn" ,"type" : "NULL" } , 
+	"guard" : {"name" : "NULL", "arg" : "NULL" } , 
+	"methodInvocation" : {"methodName" : "NULL" , "methodArgument" : "NULL" }, 
+	"resultHandling" : [] 
+ } , 
+
+{ "from" : "CHECKSPEED" ,"to" : "INPUTSPEED" ,
+	"message" : {"name" : "engineOff" ,"type" : "NULL" } , 
+	"guard" : {"name" : "NULL", "arg" : "NULL" } , 
+	"methodInvocation" : {"methodName" : "NULL" , "methodArgument" : "NULL" }, 
+	"resultHandling" : [] 
+ } , 
+
+{ "from" : "CHECKSPEED" ,"to" : "CHECKSPEED" ,
+	"message" : {"name" : "getSpeed" ,"type" : "NULL" } , 
+	"guard" : {"name" : "NULL", "arg" : "NULL" } , 
+	"methodInvocation" : {"methodName" : "getSpeedFunction" , "methodArgument" : "NULL" } ,
+	"resultHandling" : [ 
+		{"resultCode" : "success", "messageEmission" : 
+			{"port" : "SPEEDCONTROL" ,"messageName" : "returnSpeed" ,"argType" : "NULL" ,"givenArgument" : "NULL" }
+		}
+	 ] 
+ } 
+] , 
+
+"name" : "INPUTSPEED" }

@@ -22,7 +22,8 @@ activeElement returns [String val] :
 
 activeElementBody returns [String val] : 
     '{' portPart statePart transitionPart '}' 
-        { $val = $portPart.val + ", \n\n" + $statePart.val + ", \n\n" +  $transitionPart.val; }    
+        { $val = $portPart.val + ", \n\n" + $statePart.val + ", \n\n" +  $transitionPart.val; 
+            SymbolTable.count++; }    
 ;
 
 statePart returns [String val] : 
@@ -39,9 +40,11 @@ stateDefinitions returns [String val] :
 
 stateDefinition returns [String val]: 
     ID 
-        {$val = "[ \"" + $ID.text + "\" , [] ]" ;} 
+        {$val = "[ \"" + $ID.text + "\" , [] ]" ;
+        SymbolTable.state.add($ID.text); } 
     | ID '{' stateDefinitions '}'   
-        {$val = "[ \"" + $ID.text + "\"" + ", [" + $stateDefinitions.val + "] ]"  ;} 
+        {$val = "[ \"" + $ID.text + "\"" + ", [" + $stateDefinitions.val + "] ]"  ;
+        SymbolTable.state.add($ID.text); } 
 ;
 
 stateDefinitionsD returns [String val]: 
@@ -60,16 +63,32 @@ transitions returns [String val] :
 
 transition returns [String val]:
     from '->' to ':' messageReception guard messageProcessing ';'
-        { $val = "{ \"from\" : \"" + $from.text + "\" ," +  "\"to\" : \"" + $to.text + "\" ,\n\t" + $messageReception.val  + " , \n\t" + $guard.val +  " , " + $messageProcessing.val
-            + " \n } "; }
+        { $val = "{ \"from\" : \"" + $from.val + "\" ," +  "\"to\" : \"" + $to.text 
+            + "\" ,\n\t" + $messageReception.val  + " , \n\t" + $guard.val +  " , "
+            + $messageProcessing.val + " \n } "; 
+        }
 ;
 
 transitionsD returns [String val] : // Capital D for dummy. 
     transitions {$val = $transitions.val;} 
 ;
 
-from : ID ;
-to : ID ;
+from returns [String val] : 
+    ID 
+        {   if (false == SymbolTable.state.contains($ID.text)) {
+                System.out.println("State definition from not found : " + $ID.text);
+            }
+            $val = $ID.text;
+        }
+;
+to returns [String val] : 
+    ID 
+        {   if (false == SymbolTable.state.contains($ID.text)) {
+                System.out.println("State definition to not found : " + $ID.text);
+            }
+            $val = $ID.text;
+        }
+;
 
 messageReception returns [String val] :
     messageName 
@@ -153,10 +172,14 @@ externalEffect returns [String val]:
 resultCode : ID ;
 
 messageEmission returns [String val]:
-    port '->' messageName messageEmissionParams
-        { $val = "\"messageEmission\" : \n\t\t\t{\"port\" : \"" + $port.text + "\" ," + 
+    portOut '->' messageName messageEmissionParams
+        { $val = "\"messageEmission\" : \n\t\t\t{\"port\" : \"" + $portOut.val + "\" ," + 
         "\"messageName\" : \"" + $messageName.text +  "\" ," +
-        $messageEmissionParams.val + "}" ;}
+        $messageEmissionParams.val + "}" ;
+        if (false == SymbolTable.outPort.contains($portOut.val)) {
+            System.out.println("port not defined : " +  $portOut.val );
+        }
+        }
 ;
 
 messageEmissionParams returns [String val]:
@@ -185,7 +208,7 @@ listOfPortOut returns [String val]:
 
 listOfPort returns [String val]:
     port listOfPortD
-    { $val = "\"" + $port.text + "\"" + $listOfPortD.val;}
+    { $val = "\"" + $port.val + "\"" + $listOfPortD.val;}
 ;
 
 listOfPortD returns [String val]:
@@ -194,7 +217,15 @@ listOfPortD returns [String val]:
     { $val = " , " + $listOfPort.val ; }
 ;
 
-port : ID ;
+port returns [String val]:
+    ID { SymbolTable.outPort.add($ID.text); $val = $ID.text;}  
+// include inPort bug
+;
+portOut returns [String val]:
+    ID { $val = $ID.text; }  
+;
+
+
 messageName : ID ;
 
 stringLiteral : STRING+ ;

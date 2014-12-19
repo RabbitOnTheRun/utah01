@@ -1,0 +1,39 @@
+{"inPort" : 
+ ["SPEC"] , 
+"outPort" : 
+ ["OUT"] , 
+
+"state" : 
+ [[ "start" , [] ] , [ "SPEC" , [] ] , [ "State1" , [] ] , [ "State2" , [] ]] , 
+
+"transition" : [ 
+{ "from" : "start" ,"to" : "SPEC" ,
+	"message" : {"name" : "start" ,"type" : "NULL" } , 
+	"guard" : {"name" : "NULL", "arg" : "NULL" } , 
+	"methodInvocation" : {"methodName" : "NULL" , "methodArgument" : "NULL" }, 
+	"resultHandling" : [] 
+ } , 
+
+{ "from" : "SPEC" ,"to" : "State1" ,
+	"message" : {"name" : "engineOn" ,"type" : "NULL" } , 
+	"guard" : {"name" : "NULL", "arg" : "NULL" } , 
+	"methodInvocation" : {"methodName" : "NULL" , "methodArgument" : "NULL" }, 
+	"resultHandling" : [] 
+ } , 
+
+{ "from" : "State1" ,"to" : "State2" ,
+	"message" : {"name" : "clearSpeed" ,"type" : "NULL" } , 
+	"guard" : {"name" : "NULL", "arg" : "NULL" } , 
+	"methodInvocation" : {"methodName" : "NULL" , "methodArgument" : "NULL" }, 
+	"resultHandling" : [] 
+ } , 
+
+{ "from" : "State2" ,"to" : "SPEC" ,
+	"message" : {"name" : "engineOff" ,"type" : "NULL" } , 
+	"guard" : {"name" : "NULL", "arg" : "NULL" } , 
+	"methodInvocation" : {"methodName" : "NULL" , "methodArgument" : "NULL" }, 
+	"resultHandling" : [] 
+ } 
+] , 
+
+"name" : "SPEC" }

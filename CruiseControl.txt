@@ -13,7 +13,7 @@ activeElement {
                 SPEC -> engineOn();
 				SPEC -> clearSpeed();
 				SENSORSCAN -> engineOn_();
-				SENSORSCAN -> clearSpeed();
+				SENSORSCANN -> clearSpeed();
 				SPEEDCONTROL -> clearSpeed();
 				INPUTSPEED -> engineOn();
 		};

@@ -27,5 +27,8 @@ public class utah01ListenerForJSON extends utah01BaseListener{
         } catch (IOException e){
             System.out.println ("Can't open/write file for write : " + fileName);
         }      
+        SymbolTable.state.clear();
+        SymbolTable.inPort.clear();
+        SymbolTable.outPort.clear();
     }
 }

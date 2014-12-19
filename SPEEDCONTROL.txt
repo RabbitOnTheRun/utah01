@@ -1,0 +1,85 @@
+{"inPort" : 
+ ["SPEEDCONTROL"] , 
+"outPort" : 
+ ["INPUTSPEED"] , 
+
+"state" : 
+ [[ "start" , [] ] , [ "DISABLED" , [] ] , [ "ENABLED" , [] ]] , 
+
+"transition" : [ 
+{ "from" : "start" ,"to" : "DISABLED" ,
+	"message" : {"name" : "start" ,"type" : "NULL" } , 
+	"guard" : {"name" : "NULL", "arg" : "NULL" } , 
+	"methodInvocation" : {"methodName" : "NULL" , "methodArgument" : "NULL" }, 
+	"resultHandling" : [] 
+ } , 
+
+{ "from" : "DISABLED" ,"to" : "DISABLED" ,
+	"message" : {"name" : "clearSpeed" ,"type" : "NULL" } , 
+	"guard" : {"name" : "NULL", "arg" : "NULL" } , 
+	"methodInvocation" : {"methodName" : "NULL" , "methodArgument" : "NULL" }, 
+	"resultHandling" : [] 
+ } , 
+
+{ "from" : "DISABLED" ,"to" : "DISABLED" ,
+	"message" : {"name" : "speed" ,"type" : "NULL" } , 
+	"guard" : {"name" : "NULL", "arg" : "NULL" } , 
+	"methodInvocation" : {"methodName" : "NULL" , "methodArgument" : "NULL" }, 
+	"resultHandling" : [] 
+ } , 
+
+{ "from" : "DISABLED" ,"to" : "DISABLED" ,
+	"message" : {"name" : "recordSpeed" ,"type" : "NULL" } , 
+	"guard" : {"name" : "NULL", "arg" : "NULL" } , 
+	"methodInvocation" : {"methodName" : "NULL" , "methodArgument" : "NULL" }, 
+	"resultHandling" : [] 
+ } , 
+
+{ "from" : "DISABLED" ,"to" : "DISABLED" ,
+	"message" : {"name" : "returnSpeed" ,"type" : "NULL" } , 
+	"guard" : {"name" : "NULL", "arg" : "NULL" } , 
+	"methodInvocation" : {"methodName" : "NULL" , "methodArgument" : "NULL" }, 
+	"resultHandling" : [] 
+ } , 
+
+{ "from" : "ENABLED" ,"to" : "ENABLED" ,
+	"message" : {"name" : "enableControl" ,"type" : "NULL" } , 
+	"guard" : {"name" : "NULL", "arg" : "NULL" } , 
+	"methodInvocation" : {"methodName" : "NULL" , "methodArgument" : "NULL" }, 
+	"resultHandling" : [] 
+ } , 
+
+{ "from" : "ENABLED" ,"to" : "ENABLED" ,
+	"message" : {"name" : "recordSpeed" ,"type" : "NULL" } , 
+	"guard" : {"name" : "NULL", "arg" : "NULL" } , 
+	"methodInvocation" : {"methodName" : "NULL" , "methodArgument" : "NULL" }, 
+	"resultHandling" : [] 
+ } , 
+
+{ "from" : "ENABLED" ,"to" : "DISABLED" ,
+	"message" : {"name" : "disableControl" ,"type" : "NULL" } , 
+	"guard" : {"name" : "NULL", "arg" : "NULL" } , 
+	"methodInvocation" : {"methodName" : "NULL" , "methodArgument" : "NULL" }, 
+	"resultHandling" : [] 
+ } , 
+
+{ "from" : "DISABLED" ,"to" : "ENABLED" ,
+	"message" : {"name" : "enableControl" ,"type" : "NULL" } , 
+	"guard" : {"name" : "NULL", "arg" : "NULL" } , 
+	"methodInvocation" : {"methodName" : "NULL" , "methodArgument" : "NULL" }, 
+	"resultHandling" : [ 
+		{"resultCode" : "NULL", "messageEmission" : 
+			{"port" : "INPUTSPEED" ,"messageName" : "getSpeed" ,"argType" : "NULL" ,"givenArgument" : "NULL" }
+		}
+	 ] 
+ } , 
+
+{ "from" : "ENABLED" ,"to" : "ENABLED" ,
+	"message" : {"name" : "returnSpeed" ,"type" : "NULL" } , 
+	"guard" : {"name" : "NULL", "arg" : "NULL" } , 
+	"methodInvocation" : {"methodName" : "setThrottle" , "methodArgument" : "NULL" } ,
+	"resultHandling" : [] 
+ } 
+] , 
+
+"name" : "SPEEDCONTROL" }
