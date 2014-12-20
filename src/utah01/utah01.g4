@@ -29,7 +29,7 @@ activeElement returns [String val] :
 activeElementBody returns [String val] : 
     '{' portPart statePart transitionPart '}' 
         { $val = $portPart.val + ", \n\n" + $statePart.val + ", \n\n" 
-            +  $transitionPart.val + ", \n\n" + SymbolTable.makeAcceptableMessageList()
+            +  $transitionPart.val + ", \n\n" + SymbolTable.makeAcceptableMessageList()+ ", \n\n"
             + SymbolTable.makeEmitMessageList(); 
             SymbolTable.count++; }    
 ;
